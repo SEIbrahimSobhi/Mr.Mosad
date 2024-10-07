@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المفاهيم</title>
+    <style>
+        /* إعدادات عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            color: #fff;
+            height: 100%;
+            background: url('images.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            overflow-y: auto;
+        }
+        
+        /* طبقة داكنة فوق الخلفية */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+        
+        /* شريط التنقل */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            font-size: 32px;
+            font-weight: bold;
+            color: #8fe3ff;
+            text-transform: capitalize;
+            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+        }
+        
+        .navbar-brand:hover {
+            color: #fff;
+            text-shadow: 0 0 10px #8fe3ff, 0 0 20px #8fe3ff;
+            transform: scale(1.1);
+        }
+        
+        /* زر القائمة (همبرغر) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .menu-toggle:hover {
+            background-color: rgba(0, 0, 0, 1);
+        }
+        
+        .menu-toggle .bar {
+            width: 30px;
+            height: 3px;
+            background: #fff;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle.open .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .menu-toggle.open .bar:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.open .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        
+        /* قائمة التنقل */
+        .navbar-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-links li {
+            margin: 0 15px;
+        }
+        
+        .navbar-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s ease;
+        }
+        
+        .navbar-links a:hover {
+            color: #8fe3ff;
+        }
+        
+        .navbar-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            background: #8fe3ff;
+            transition: width 0.3s ease;
+        }
+        
+        .navbar-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* القائمة عند الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 20px;
+                border-radius: 5px;
+            }
+        
+            .menu-toggle {
+                display: flex;
+            }
+        
+            .navbar-links.active {
+                display: flex;
+            }
+        }
+
+        /* عنوان الصفحة */
+.page-title {
+    text-align: center;
+    font-size: 48px; /* زيادة حجم الخط لجعل العنوان أكثر وضوحاً */
+    color: #8fe3ff; /* الحفاظ على اللون الذهبي الفاتح */
+    margin: 100px 0 20px 0; /* زيادة المسافة العلوية أكثر لتحريك العنوان للأسفل */
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8); /* زيادة عمق الظل لجعل العنوان بارزاً أكثر */
+    font-weight: bold; /* جعل الخط سميكاً لمزيد من الوضوح */
+}
+
+        
+        /* الأقسام */
+        .section {
+            padding: 30px 20px;
+            text-align: center;
+            margin: 20px auto;
+            width: 90%;
+        }
+        
+        .section-title {
+            font-size: 28px; /* حجم الخط المعدل */
+            margin-bottom: 20px;
+            color: #8fe3ff;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        /* تصميم الوحدات */
+        .rectangles-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            direction: rtl;
+        }
+
+        .rectangle {
+            width: 120px;
+            height: 60px;
+            margin: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .rectangle:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        /* تحسين استجابة الوحدات */
+        @media (max-width: 768px) {
+            .rectangle {
+                width: 120px;
+                height: 60px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .rectangle {
+                width: 100px;
+                height: 50px;
+                font-size: 14px;
+            }
+        }
+        
+        /* تحسين العرض على الشاشات الصغيرة */
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 28px; /* حجم الخط المعدل على الشاشات الصغيرة */
+            }
+        
+            .section-title {
+                font-size: 24px; /* حجم الخط المعدل */
+            }
+        
+            .navbar-brand {
+                font-size: 28px; /* حجم الخط المعدل */
+            }
+        
+            .navbar-links a {
+                font-size: 16px; /* حجم الخط المعدل */
+            }
+        }
+        
+/* تحسين شامل لأيقونات واتساب ويوتيوب لتبدو أكثر فخامة مع تحسينات على الشاشات الصغيرة */
+.social-icons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    z-index: 100;
+}
+
+.social-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(255, 255, 255, 0.2) inset;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+    cursor: pointer;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.social-icon:hover::before {
+    opacity: 1;
+}
+
+.social-icon img {
+    width: 60%;
+    height: 60%;
+    transition: transform 0.4s ease;
+}
+
+.social-icon:hover img {
+    transform: scale(1.2);
+}
+
+.social-icon:hover {
+    transform: scale(1.15);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 6px 12px rgba(0, 0, 0, 0.15) inset;
+    background: linear-gradient(145deg, #f7f7f7, #cccccc);
+}
+
+/* تخصيص لكل أيقونة */
+.whatsapp {
+    background: linear-gradient(145deg, #25d366, #128c7e);
+    box-shadow: 0 10px 20px rgba(0, 128, 0, 0.25);
+    border: 2px solid #25d366;
+}
+
+.whatsapp img {
+    content: url('https://img.icons8.com/ios-filled/50/ffffff/whatsapp.png');
+}
+
+
+/* الفوتر */
+.footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.9);
+    border-top: 4px solid #8fe3ff;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+    margin-top: 40px;
+}
+
+.footer p {
+    margin: 0;
+    color: #8fe3ff;
+    font-size: 18px;
+    line-height: 1.5;
+}
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+
+    <!-- شريط التنقل -->
+    <nav class="navbar">
+        <div class="navbar-brand">Mr.Mosad</div>
+        <div class="menu-toggle" id="menu-toggle">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="navbar-links" id="navbar-links">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="concepts.html">المفاهيم</a></li>
+            <li><a href="exams.html">الاختبارات</a></li>
+            <li><a href="help.html">المساعدة</a></li>
+        </ul>
+    </nav>
+
+    <!-- عنوان الصفحة -->
+    <div class="page-title">المفاهيم</div>
+
+    <div class="section" id="statics-section">
+        <h2 class="section-title">English</h2>
+        <div class="rectangles-container">
+            <div class="rectangle" onclick="openBook('https://elearnningcontent.blob.core.windows.net/elearnningcontent/content/2024/Secondry/secondry3/Term1/Android/eng%203sec%20t1%20u2/index.html')">Unit 2</div>
+            <div class="rectangle" onclick="openBook('https://elearnningcontent.blob.core.windows.net/elearnningcontent/content/2024/Secondry/secondry3/Term1/Android/eng%203sec%20t1%20u3/index.html')">Unit 3</div>
+            <div class="rectangle" onclick="openBook('https://elearnningcontent.blob.core.windows.net/elearnningcontent/content/2024/Secondry/secondry3/Term1/Android/%D8%A7%D9%84%D9%84%D8%BA%D8%A9%20%D8%A7%D9%84%D8%A7%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%D8%A9%203%D8%AB%20%D8%A7%D9%84%D9%88%D8%AD%D8%AF%D8%A9%20%D8%A7%D9%84%D8%B1%D8%A7%D8%A8%D8%B9%D8%A9/3%D8%ABu4/publish/index.html')">Unit 4</div>
+            <div class="rectangle" onclick="openBook('https://elearnningcontent.blob.core.windows.net/elearnningcontent/content/2024/Secondry/secondry3/Term1/Android/eng%203%20sec%20t1%20u5_1/index.html')">Unit 5</div>
+            <div class="rectangle" onclick="openBook('https://elearnningcontent.blob.core.windows.net/elearnningcontent/content/2024/Secondry/secondry3/Term1/Android/3%D8%AB%20%D8%A7%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%20%D8%A7%D9%84%D9%88%D8%AD%D8%AF%D8%A9%20%D8%A7%D9%84%D8%B3%D8%A7%D8%AF%D8%B3/index.html')">Unit 6</div>
+            <div class="rectangle" onclick="openBook('https://elearnningcontent.blob.core.windows.net/elearnningcontent/content/2024/Secondry/secondry3/Term1/Guidance%20model/English%20language_t2_3_Secondary_Unit7/index.html')">Unit 7</div>
+            <div class="rectangle" onclick="openBook('https://elearnningcontent.blob.core.windows.net/elearnningcontent/content/2024/Secondry/secondry3/Term1/Guidance%20model/English%20language_t2_3_Secondary_Unit8/index.html')">Unit 8</div>
+            <div class="rectangle" onclick="openBook('https://elearnningcontent.blob.core.windows.net/elearnningcontent/content/2024/Secondry/secondry3/Term1/Guidance%20model/English%20language_t2_3_Secondary_Unit9/index.html')">Unit 9</div>
+            <div class="rectangle" onclick="openBook('https://elearnningcontent.blob.core.windows.net/elearnningcontent/content/2024/Secondry/secondry3/Term1/Guidance%20model/eng_3sec_t2_%20u10/index.html')">Unit 10</div>
+            <div class="rectangle" onclick="openBook('https://elearnningcontent.blob.core.windows.net/elearnningcontent/content/2024/Secondry/secondry3/Term1/Guidance%20model/eng_3sec_t2_%20u11/index.html')">Unit 11</div>
+            <div class="rectangle" onclick="openBook('https://elearnningcontent.blob.core.windows.net/elearnningcontent/content/2024/Secondry/secondry3/Term1/Guidance%20model/eng_3sec_t2_%20u12/index.html')">Unit 12</div>
+        </div>
+    </div>
+<!-- أيقونات التواصل الاجتماعي الفاخرة والمحسنة -->
+<div class="social-icons">
+    <a href="https://wa.me/201004422018" target="_blank" class="social-icon whatsapp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+</div>
+
+
+    <!-- الفوتر -->
+    <footer class="footer">
+        <p>Copy Right 2024 © By Ebrahem Sobhy All Rights Reserved</p>
+    </footer>
+
+    <script>
+
+        // وظائف فتح الكتاب
+        function openBook(url) {
+            window.open(url, '_self'); // فتح الرابط داخل نفس النافذة
+        }
+
+        // قائمة التنقل
+        const menuToggle = document.getElementById('menu-toggle');
+        const navbarLinks = document.getElementById('navbar-links');
+
+        menuToggle.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+            menuToggle.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>
