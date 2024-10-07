@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المفاهيم</title>
     <style>
+       
         /* إعدادات عامة */
         * {
             margin: 0;
@@ -12,26 +13,45 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: Arial, sans-serif;
-            color: #fff;
-            height: 100%;
-            background: url('images.jpeg') no-repeat center center fixed;
-            background-size: cover;
-            overflow-y: auto;
-        }
-        
-        /* طبقة داكنة فوق الخلفية */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: -1;
-        }
-        
+  /* إعدادات الجسم */
+body {
+    font-family: 'Arial', sans-serif; /* تغيير الخط */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* لضمان وجود الفوتر أسفل الصفحة */
+    background-color: #1e1e1e; /* لون الخلفية */
+    overflow: hidden;
+    min-height: 100vh; /* جعل الارتفاع 100% من ارتفاع العرض المرئي */
+    margin: 0; /* إلغاء أي هوامش افتراضية */
+    padding: 0; /* إلغاء أي حواف داخلية */
+    overflow-y: auto;
+}
+
+/* طبقة داكنة فوق الخلفية */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(30, 30, 30, 0.8); /* لون داكن مع شفافية */
+    z-index: -1;
+}
+
+/* خلفية الصورة */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://previews.123rf.com/images/sergeyvasutin/sergeyvasutin1812/sergeyvasutin181200010/116704684-round-english-subject-concept-on-black-chalkboard.jpg') no-repeat center center fixed; /* خلفية جديدة */
+    background-size: cover;
+    z-index: -1;
+}
+
         /* شريط التنقل */
         .navbar {
             position: fixed;
@@ -176,7 +196,7 @@
         
         /* الأقسام */
         .section {
-            padding: 30px 20px;
+            padding: 20px 10px;
             text-align: center;
             margin: 20px auto;
             width: 90%;
@@ -254,81 +274,6 @@
                 font-size: 16px; /* حجم الخط المعدل */
             }
         }
-        
-/* تحسين شامل لأيقونات واتساب ويوتيوب لتبدو أكثر فخامة مع تحسينات على الشاشات الصغيرة */
-.social-icons {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    z-index: 100;
-}
-
-.social-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(145deg, #ffffff, #e6e6e6);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 4px 8px rgba(255, 255, 255, 0.2) inset;
-    transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
-    cursor: pointer;
-    border: 3px solid transparent;
-    background-clip: padding-box;
-    position: relative;
-    overflow: hidden;
-}
-
-.social-icon::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 50%;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.social-icon:hover::before {
-    opacity: 1;
-}
-
-.social-icon img {
-    width: 60%;
-    height: 60%;
-    transition: transform 0.4s ease;
-}
-
-.social-icon:hover img {
-    transform: scale(1.2);
-}
-
-.social-icon:hover {
-    transform: scale(1.15);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 6px 12px rgba(0, 0, 0, 0.15) inset;
-    background: linear-gradient(145deg, #f7f7f7, #cccccc);
-}
-
-/* تخصيص لكل أيقونة */
-.whatsapp {
-    background: linear-gradient(145deg, #25d366, #128c7e);
-    box-shadow: 0 10px 20px rgba(0, 128, 0, 0.25);
-    border: 2px solid #25d366;
-}
-
-.whatsapp img {
-    content: url('https://img.icons8.com/ios-filled/50/ffffff/whatsapp.png');
-}
-
 
 /* الفوتر */
 .footer {
@@ -387,13 +332,6 @@
             <div class="rectangle" onclick="openBook('https://elearnningcontent.blob.core.windows.net/elearnningcontent/content/2024/Secondry/secondry3/Term1/Guidance%20model/eng_3sec_t2_%20u12/index.html')">Unit 12</div>
         </div>
     </div>
-<!-- أيقونات التواصل الاجتماعي الفاخرة والمحسنة -->
-<div class="social-icons">
-    <a href="https://wa.me/201004422018" target="_blank" class="social-icon whatsapp">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-    </a>
-</div>
-
 
     <!-- الفوتر -->
     <footer class="footer">
